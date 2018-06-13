@@ -18,11 +18,8 @@ class NewVisitorTest(unittest.TestCase):
 
         #她注意到网页的标题和头部都包含了"To-Do"这个词
         self.assertIn('To-Do',self.browser.title)
-
         header_text = self.browser.find_element_by_tag_name('h1').text
         self.assertIn('To-Do',header_text)
-
-        #self.fail('Finish the test!')
 
         #应用邀请她输入一个待办事项
         inputbox = self.browser.find_element_by_id('id_new_item')
@@ -64,7 +61,6 @@ class NewVisitorTest(unittest.TestCase):
 
         #她很满意，去睡觉了
 
-        self.browser.quit()
 
 if __name__ == '__main__':
     #warnings='ignore' 作用禁止抛出resourceWarning异常
