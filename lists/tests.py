@@ -1,6 +1,7 @@
 from django.core.urlresolvers import resolve
 from django.test import TestCase
 from django.http import HttpRequest
+from django.template.loader import render_to_string
 
 from lists.views import home_page
 
@@ -27,4 +28,12 @@ class HomePageTest(TestCase):
         #注意：response.content 是原始字节，不是 Python 字符串，因此对比时要使用 b'' 句法
         self.assertTrue(response.content.startswith(b'<html>')) #➌
         self.assertIn(b'<title>To-Do lists</title>', response.content) #➍
-        self.assertTrue(response.content.endswith(b'</html>'))
+        self.assertTrue(response.content.strip().endswith(b'</html>'))
+
+#检查是否渲染了正确的模板
+    def test_home_page_returns_correct_html(self):
+        request = HttpRequest()
+        response = home_page(request)
+        expected_html = render_to_string('home.html')
+        #使用 .decode() 把 response.content 中的字节转换成 Python 中的 Unicode 字符串，这样就可以对比字符串，而不用像之前那样对比字节
+        self.assertEqual(response.content.decode(), expected_html)
