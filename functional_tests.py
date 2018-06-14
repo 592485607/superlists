@@ -10,12 +10,18 @@ class NewVisitorTest(unittest.TestCase):
     def tearDown(self):
         self.browser.quit()
 
+    def check_for_row_in_list_table(self, row_text):
+        table = self.browser.find_element_by_id('id_list_table')
+
+        rows = table.find_elements_by_tag_name('tr')
+        self.assertIn(row_text, [row.text for row in rows])
+
     def test_can_start_a_list_retrieve_it_later(self):
 
         #伊迪听说有一个很酷的在线待办事项应用
         # 她去看了这个应用首页
         self.browser.get('http://localhost:8000')
-
+        print(self.browser.title)
         #她注意到网页的标题和头部都包含了"To-Do"这个词
         self.assertIn('To-Do',self.browser.title)
         header_text = self.browser.find_element_by_tag_name('h1').text
@@ -57,14 +63,17 @@ class NewVisitorTest(unittest.TestCase):
         inputbox = self.browser.find_element_by_id('id_new_item')
         inputbox.send_keys('Use peacock feathers to make a fly')
         inputbox.send_keys(Keys.ENTER)
+
         # 页面再次更新，清单中显示了这两个待办事项
-        table = self.browser.find_element_by_id('id_list_table')
-        rows = table.find_elements_by_tag_name('tr')
-        self.assertIn('1: Buy peacock feathers', [row.text for row in rows])
-        self.assertIn(
-            '2: Use peacock feathers to make a fly',
-            [row.text for row in rows]
-        )
+        # table = self.browser.find_element_by_id('id_list_table')
+        # rows = table.find_elements_by_tag_name('tr')
+        # self.assertIn('1: Buy peacock feathers', [row.text for row in rows])
+        # self.assertIn(
+        #     '2: Use peacock feathers to make a fly',
+        #     [row.text for row in rows]
+        # )
+        self.check_for_row_in_list_table('1: Buy peacock feathers')
+        self.check_for_row_in_list_table('2: Use peacock feathers to make a fly')
 
         # 伊迪丝想知道这个网站是否会记住她的清单
         # 她看到网站为她生成了一个唯一的URL
