@@ -35,5 +35,6 @@ class HomePageTest(TestCase):
         request = HttpRequest()
         response = home_page(request)
         expected_html = render_to_string('home.html')
+
         #使用 .decode() 把 response.content 中的字节转换成 Python 中的 Unicode 字符串，这样就可以对比字符串，而不用像之前那样对比字节
         self.assertEqual(response.content.decode(), expected_html)
