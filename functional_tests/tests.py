@@ -43,10 +43,10 @@ class NewVisitorTest(unittest.TestCase):
         inputbox.send_keys(Keys.ENTER)
 
         import time
-        time.sleep(10)
-        table = self.browser.find_element_by_id('id_list_table')
 
-        rows = table.find_element_by_tag_name('tr')
+        # table = self.browser.find_element_by_id('id_list_table')
+        #
+        # rows = table.find_element_by_tag_name('tr')
 
         # self.assertTrue(
         #     any(row.text == '1: Buy peacock feathers' for row in rows),
@@ -54,7 +54,7 @@ class NewVisitorTest(unittest.TestCase):
         #         table.text,
         #     )
         # )
-        self.assertIn('1: Buy peacock feathers', [row.text for row in rows])
+        # self.assertIn('1: Buy peacock feathers', [row.text for row in rows])
 
         #页面中又显示了一个文本框,可以输入其他的待办事项
         #她输入了:Use peacock feathers to make a fly"（使用孔雀羽毛做假蝇）
@@ -65,13 +65,11 @@ class NewVisitorTest(unittest.TestCase):
         inputbox.send_keys(Keys.ENTER)
 
         # 页面再次更新，清单中显示了这两个待办事项
-        # table = self.browser.find_element_by_id('id_list_table')
-        # rows = table.find_elements_by_tag_name('tr')
-        # self.assertIn('1: Buy peacock feathers', [row.text for row in rows])
-        # self.assertIn(
-        #     '2: Use peacock feathers to make a fly',
-        #     [row.text for row in rows]
-        # )
+        table = self.browser.find_element_by_id('id_list_table')
+        rows = table.find_elements_by_tag_name('tr')
+        self.assertIn('1: Buy peacock feathers', [row.text for row in rows])
+        self.assertIn('2: Use peacock feathers to make a fly',[row.text for row in rows]
+        )
         self.check_for_row_in_list_table('1: Buy peacock feathers')
         self.check_for_row_in_list_table('2: Use peacock feathers to make a fly')
 
@@ -82,7 +80,7 @@ class NewVisitorTest(unittest.TestCase):
         # 她访问那个URL，发现待办事项清单还在
 
         #她很满意，去睡觉了
-
+        time.sleep(10)
 
 if __name__ == '__main__':
     #warnings='ignore' 作用禁止抛出resourceWarning异常
