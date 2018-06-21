@@ -1,8 +1,9 @@
+from django.test import LiveServerTestCase,TestCase,client
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 import unittest
 
-class NewVisitorTest(unittest.TestCase):
+class NewVisitorTest(LiveServerTestCase):
     def setUp(self):
         self.browser = webdriver.Firefox()
         self.browser.implicitly_wait(3)
@@ -20,7 +21,7 @@ class NewVisitorTest(unittest.TestCase):
 
         #伊迪听说有一个很酷的在线待办事项应用
         # 她去看了这个应用首页
-        self.browser.get('http://localhost:8000')
+        self.browser.get(self.live_server_url)
         print(self.browser.title)
         #她注意到网页的标题和头部都包含了"To-Do"这个词
         self.assertIn('To-Do',self.browser.title)
@@ -82,6 +83,6 @@ class NewVisitorTest(unittest.TestCase):
         #她很满意，去睡觉了
         time.sleep(10)
 
-if __name__ == '__main__':
-    #warnings='ignore' 作用禁止抛出resourceWarning异常
-    unittest.main(warnings='ignore')
+# if __name__ == '__main__':
+#     #warnings='ignore' 作用禁止抛出resourceWarning异常
+#     unittest.main(warnings='ignore')
